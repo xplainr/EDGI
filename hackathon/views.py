@@ -58,5 +58,20 @@ def user_page(request, id=None):
 		}),
 		headers={'content-type': 'application/json'}
 	).json()
-	print(response_data['data']['surveys'])
+
+	[
+		'English', 'Chinese(Simplified)', 'Chinese(Traditional)', 'Danish', 'Dutch', 'Finnish', 'French', 'German', 'Greek', 
+		'Italian', 'Japanese', 'Korean', 'Malay', 'Norwegian', 'Polish', 'Portuguese(Iberian)', 'Portuguese(Brazilian)', 'Russian', 
+		'Spanish', 'Swedish', 'Turkish', 'Ukrainian', 'Reverse', 'Albanian', 'Arabic', 'Armenian', 'Basque', 'Bengali', 'Bosnian', 
+		'Bulgarian', 'Catalan', 'Croatian', 'Czech', 'Estonian', 'Filipino', 'Georgian', 'Hebrew', 'Hindi', 'Hungarian', 'Icelandic', 
+		'Indonesian', 'Irish', 'Kurdish', 'Latvian', 'Lithuanian', 'Macedonian', 'Malayalam', 'Persian', 'Punjabi', 'Romanian', 
+		'Serbian', 'Slovak', 'Slovenian', 'Swahili', 'Tamil', 'Telugu', 'Thai', 'Vietnamese', 'Welsh'
+	]
+
+	for idx, key in enumerate(response_data.items()):
+		print(idx)
+	#response_data['data']['surveys'][0]['language_id'] = "English"
+	#print(response_data['data']['surveys'][0]['language_id'])
+
+
 	return render(request, 'user.html', {'surveys': response_data['data']['surveys']})
