@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block body %}
+	<table>
+		<tr>
+			<th>
+				Survey Title
+			</th>
+			<th>
+				Date Created
+			</th>
+			<th>
+				Last Modified
+			</th>
+			<th>
+				Resposnes
+			</th>
+			<th>
+				Questions
+			</th>
+			<th>
+				Language
+			</th>
+		</tr>
+		{% for survey in surveys %}
+			<tr>
+				<td>
+					<a href="{{survey.preview_url}}">{{ survey.title }}</a>
+				</td>
+				<td>
+					{{ survey.date_created }}
+				</td>
+				<td>
+					{{ survey.date_modified }}
+				</td>
+				<td>
+					{{ survey.num_responses }}
+				</td>
+				<td>
+					{{ survey.question_count }}
+				</td>
+				<td>
+					{{ survey.language_id }}
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}
