@@ -34,3 +34,6 @@ background-blend-mode: screen;
 	-webkit-border-radius:5px;
 	border:1px solid #459A00
 }  
+#logo {
+	   content:url(https://secure.surveymonkey.com/wp-content/uploads/2015/assets/brandassets/sm_primary.png);
+	}​
