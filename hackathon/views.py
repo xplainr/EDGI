@@ -58,5 +58,5 @@ def user_page(request, id=None):
 		}),
 		headers={'content-type': 'application/json'}
 	).json()
-
+	print(response_data['data']['surveys'])
 	return render(request, 'user.html', {'surveys': response_data['data']['surveys']})
