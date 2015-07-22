@@ -59,6 +59,7 @@ th {
 	border-radius: 20px;
 	margin-left: auto;
 	margin-right: auto;
+	list-style-type:none;
 }
 
 #notauth {
@@ -150,3 +151,5 @@ th {
 </style>
 </head>
 <body>
+
+
