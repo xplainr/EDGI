@@ -45,3 +45,17 @@ def get_session_from_user(user):
 	service = get_oauth_service()
 	session = OAuth2Session(client_id = settings.SM_CLIENT_ID, client_secret=settings.SM_SECRET, access_token=user.access_token, service=service)
 	return session
+
+def sm_request(session, method, body):
+	encoded_response = session.post(build_api_url(method), 
+		                         params={'format': 'json'}, 
+		                         data=json.dumps(body),
+		                         headers={'content-type': 
+		                                  'application/json'})
+	try:
+		response = encoded_response.json()
+		if response['status'] != 0:
+			response = None
+	except:
+		response = None
+	return response
