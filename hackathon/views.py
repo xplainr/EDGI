@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django import http
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 
 from .utils import *
 from .models import User
+
+
 
 def login_page(request):
 	oauth_url = get_oauth_url()
@@ -17,13 +20,21 @@ def oauth2_callback(request):
 	#check for response_data == None
 	username = response_data['data']['user_details']['username']
 
-	if 'SMSuccessTeam' not in response_data['data']['enterprise_details']['group_name']:
-		raise Http404
+	try:
+		if User.objects.get(is_admin=True):
+			is_first_user = False
+	except User.DoesNotExist:
+		is_first_user = True
+
+	print(is_first_user)
 
 	try:
 		user = User.objects.get(access_token=access_token)
 	except User.DoesNotExist:
-		user = User.objects.create(username=username, access_token=access_token)
+		if is_first_user:
+			user = User.objects.create(username=username, access_token=access_token, is_admin=True)
+		else:
+			user = User.objects.create(username=username, access_token=access_token)
 
 	request.session['at']=access_token
 
@@ -32,6 +43,10 @@ def oauth2_callback(request):
 def users_page(request):
 	if not 'at' in request.session and not User.objects.filter(access_token=request.session['at']).exists():
 		raise http.Http404
+
+	if request.method == "POST":
+		checker = request.POST.get("make_admin", None)
+		print(checker)
 
 	return render(request, 'users.html', {'users': User.objects.all()})
 

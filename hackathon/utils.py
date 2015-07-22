@@ -58,4 +58,5 @@ def sm_request(session, method, body):
 			response = None
 	except:
 		response = None
+	print(response)
 	return response
