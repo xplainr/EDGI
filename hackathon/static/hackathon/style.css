@@ -52,7 +52,7 @@ th {
     color: #fff;
 }
 
-ul {
+#ul {
 	font-family: Helvetica;
 	border: 3px solid #A9BD38;
 	width: 400px;
@@ -77,3 +77,76 @@ ul {
     border-radius: 50px 15px;
 	box-shadow: 10px 10px 5px #888888;
 }
+
+/*testing a search bar!*/
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Search Box Example 1</title>
+<meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
+<!-- CSS styles for standard search box -->
+<style type="text/css">
+	#tfheader{
+		background-color:#c3dfef;
+	}
+	#tfnewsearch{
+		float:right;
+		padding:20px;
+	}
+	.tftextinput {
+	    margin: 0px;
+	    padding: 5px 15px;
+	    font-family: Arial,Helvetica,sans-serif;
+	    font-size: 14px;
+	    border-width: 1px 0px 1px 1px;
+	    border-style: solid none solid solid;
+	    -moz-border-top-colors: none;
+	    -moz-border-right-colors: none;
+	    -moz-border-bottom-colors: none;
+	    -moz-border-left-colors: none;
+	    border-image: none;
+	    border-top-left-radius: 5px;
+	    border-bottom-left-radius: 5px;
+	    border-color: rgb(169, 189, 56) -moz-use-text-color rgb(169, 189, 56) rgb(169, 189, 56);
+	}
+	.tfbutton {
+	    margin: 0px;
+	    padding: 5px 15px;
+	    font-family: Arial,Helvetica,sans-serif;
+	    font-size: 14px;
+	    outline: medium none;
+	    cursor: pointer;
+	    text-align: center;
+	    text-decoration: none;
+	    color: #FFF;
+	    border-width: 1px 0px 1px 1px;
+	    border-style: solid none solid solid;
+	    border-color: #A9BD38 -moz-use-text-color #A9BD38 #A9BD38;
+	    -moz-border-top-colors: none;
+	    -moz-border-right-colors: none;
+	    -moz-border-bottom-colors: none;
+	    -moz-border-left-colors: none;
+	    border-image: none;
+	    background: transparent -moz-linear-gradient(center top , #A9BD38, #5F7F1F) repeat scroll 0% 0%;
+	    border-top-right-radius: 5px;
+	    border-bottom-right-radius: 5px;
+	}
+	}
+	.tfbutton:hover {
+		text-decoration: none;
+		background: #007ead;
+		background: -webkit-gradient(linear, left top, left bottom, from(#5F7F1F), to(#344D16));
+		background: -moz-linear-gradient(top,  #5F7F1F,  #344D16);
+	}
+	/* Fixes submit button height problem in Firefox */
+	.tfbutton::-moz-focus-inner {
+	  border: 0;
+	}
+	.tfclear{
+		clear:both;
+	}
+</style>
+</head>
+<body>
