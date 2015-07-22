@@ -49,7 +49,6 @@ def user_page(request, id=None, survey_title=''):
 			"order_asc": True,
 			"title": survey_title,
 		  	"fields": [
-		    	"title",
 			    "num_responses",
 			    "date_created",
 			    "date_modified",
@@ -58,6 +57,8 @@ def user_page(request, id=None, survey_title=''):
 			    "preview_url"
 			  ]	
 			}
+	if survey_title != '':
+		body['title'] = survey_title
 	response_data = sm_request(session,'get_survey_list', body)
 	#check for response_data == None
 
