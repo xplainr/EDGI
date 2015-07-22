@@ -51,6 +51,7 @@ def user_page(request, id=None, survey_title=''):
 	body = {
 			"order_asc": True,
 		  	"fields": [
+		  		"title",
 			    "num_responses",
 			    "date_created",
 			    "date_modified",
