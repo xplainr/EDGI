@@ -46,13 +46,19 @@ table.center, th, td {
 	padding: 10px;
 }
 
+
 th {
-	background-color: #A9BD38;
-	color: #000;
+    background: transparent -moz-linear-gradient(center top , #A9BD38 0%, #5F7F1F 100%) repeat scroll 0% 0%;
+    color: #fff;
 }
 
 ul {
 	font-family: Helvetica;
+	border: 3px solid #A9BD38;
+	width: 400px;
+	border-radius: 20px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #notauth {
