@@ -5,6 +5,8 @@ from django.conf import settings
 from .utils import *
 from .models import User
 
+
+
 def login_page(request):
 	oauth_url = get_oauth_url()
 	return render(request, 'login.html', {'oauth_url': oauth_url})
@@ -15,9 +17,6 @@ def oauth2_callback(request):
 
 	response_data = session.post(build_api_url('get_user_details'), params={'format': 'json'}).json()
 	username = response_data['data']['user_details']['username']
-
-	if 'SMSuccessTeam' not in response_data['data']['enterprise_details']['group_name']:
-		raise Http404
 
 	try:
 		user = User.objects.get(access_token=access_token)
@@ -31,6 +30,10 @@ def oauth2_callback(request):
 def users_page(request):
 	if not 'at' in request.session and not User.objects.filter(access_token=request.session['at']).exists():
 		raise http.Http404
+
+	if request.method == "POST":
+		checker = request.POST.get("make_admin", None)
+		print(checker)
 
 	return render(request, 'users.html', {'users': User.objects.all()})
 
