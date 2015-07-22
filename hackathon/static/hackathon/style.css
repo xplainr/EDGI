@@ -14,8 +14,12 @@
 	border-radius:5px;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
-	border:1px solid #459A00
+	border:1px solid #459A00;
+	width:68px;
 }  
+
 #logo {
-	   content:url(https://secure.surveymonkey.com/wp-content/uploads/2015/assets/brandassets/sm_primary.png);
-	}​
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
