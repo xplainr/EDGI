@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django import http
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 
 from .utils import *
 from .models import User
@@ -20,9 +21,20 @@ def oauth2_callback(request):
 	username = response_data['data']['user_details']['username']
 
 	try:
+		if User.objects.get(is_admin=True):
+			is_first_user = False
+	except User.DoesNotExist:
+		is_first_user = True
+
+	print(is_first_user)
+
+	try:
 		user = User.objects.get(access_token=access_token)
 	except User.DoesNotExist:
-		user = User.objects.create(username=username, access_token=access_token)
+		if is_first_user:
+			user = User.objects.create(username=username, access_token=access_token, is_admin=True)
+		else:
+			user = User.objects.create(username=username, access_token=access_token)
 
 	request.session['at']=access_token
 
