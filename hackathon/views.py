@@ -59,7 +59,7 @@ def user_page(request, id=None):
 		headers={'content-type': 'application/json'}
 	).json()
 
-	[
+	language_id_key = [
 		'English', 'Chinese(Simplified)', 'Chinese(Traditional)', 'Danish', 'Dutch', 'Finnish', 'French', 'German', 'Greek', 
 		'Italian', 'Japanese', 'Korean', 'Malay', 'Norwegian', 'Polish', 'Portuguese(Iberian)', 'Portuguese(Brazilian)', 'Russian', 
 		'Spanish', 'Swedish', 'Turkish', 'Ukrainian', 'Reverse', 'Albanian', 'Arabic', 'Armenian', 'Basque', 'Bengali', 'Bosnian', 
@@ -68,10 +68,7 @@ def user_page(request, id=None):
 		'Serbian', 'Slovak', 'Slovenian', 'Swahili', 'Tamil', 'Telugu', 'Thai', 'Vietnamese', 'Welsh'
 	]
 
-	for idx, key in enumerate(response_data.items()):
-		print(idx)
-	#response_data['data']['surveys'][0]['language_id'] = "English"
-	#print(response_data['data']['surveys'][0]['language_id'])
-
+	for idx, response in enumerate(response_data['data']['surveys']):
+		response_data['data']['surveys'][idx]['language_id'] = language_id_key[response_data['data']['surveys'][idx]['language_id']-1]
 
 	return render(request, 'user.html', {'surveys': response_data['data']['surveys']})
