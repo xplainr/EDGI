@@ -34,7 +34,7 @@ def users_page(request):
 
 	return render(request, 'users.html', {'users': User.objects.all()})
 
-def user_page(request, id=None):
+def user_page(request, id=None, survey_title=''):
 	if not 'at' in request.session and not User.objects.filter(access_token=request.session['at']).exists():
 		raise http.Http404
 
@@ -46,6 +46,7 @@ def user_page(request, id=None):
 	session = get_session_from_user(user)
 	response_data = session.post(build_api_url('get_survey_list'), params={'format': 'json'}, data=json.dumps({
 		"order_asc": True,
+		"title": survey_title,
 	  	"fields": [
 	    	"title",
 		    "num_responses",
