@@ -13,7 +13,8 @@ def oauth2_callback(request):
 	session = get_session_from_response(request)
 	access_token = session.access_token
 
-	response_data = session.post(build_api_url('get_user_details'), params={'format': 'json'}).json()
+	response_data = sm_request(session, 'get_user_details', {})
+	#check for response_data == None
 	username = response_data['data']['user_details']['username']
 
 	if 'SMSuccessTeam' not in response_data['data']['enterprise_details']['group_name']:
@@ -44,21 +45,21 @@ def user_page(request, id=None, survey_title=''):
 		raise http.Http404
 
 	session = get_session_from_user(user)
-	response_data = session.post(build_api_url('get_survey_list'), params={'format': 'json'}, data=json.dumps({
-		"order_asc": True,
-		"title": survey_title,
-	  	"fields": [
-	    	"title",
-		    "num_responses",
-		    "date_created",
-		    "date_modified",
-		    "question_count",
-		    "language_id",
-		    "preview_url"
-		  ]	
-		}),
-		headers={'content-type': 'application/json'}
-	).json()
+	body = {
+			"order_asc": True,
+			"title": survey_title,
+		  	"fields": [
+		    	"title",
+			    "num_responses",
+			    "date_created",
+			    "date_modified",
+			    "question_count",
+			    "language_id",
+			    "preview_url"
+			  ]	
+			}
+	response_data = sm_request(session,'get_survey_list', body)
+	#check for response_data == None
 
 	language_id_key = [
 		'English', 'Chinese(Simplified)', 'Chinese(Traditional)', 'Danish', 'Dutch', 'Finnish', 'French', 'German', 'Greek', 
