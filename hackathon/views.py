@@ -7,7 +7,6 @@ from .utils import *
 from .models import User
 
 
-
 def login_page(request):
 	oauth_url = get_oauth_url()
 	return render(request, 'login.html', {'oauth_url': oauth_url})
@@ -17,7 +16,6 @@ def oauth2_callback(request):
 	access_token = session.access_token
 
 	response_data = sm_request(session, 'get_user_details', {})
-	#check for response_data == None
 	username = response_data['data']['user_details']['username']
 
 	try:
@@ -25,8 +23,6 @@ def oauth2_callback(request):
 			is_first_user = False
 	except User.DoesNotExist:
 		is_first_user = True
-
-	print(is_first_user)
 
 	try:
 		user = User.objects.get(access_token=access_token)
