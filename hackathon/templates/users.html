@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 {% block body %}
-	<ul id="users_list">
-		<form action="" method="post">{% csrf_token %}
-			{% for user in users %}	
-				<li> <input type="checkbox" name="make_admin" value={{user.username}}>
-					<a href="/user/{{user.id}}">{{user.username}}</a>
-				</li>
-			{% endfor %}
-			<input type='submit' value='Save Changes'>
-		</form>
-	</ul>
+	<div id="ul">
+		<ul id="users_list">
+			<form action="" method="post">{% csrf_token %}
+				{% for user in users %}	
+					<li> <input type="checkbox" name="make_admin" value={{user.username}}>
+						<a href="/user/{{user.id}}">{{user.username}}</a>
+					</li>
+				{% endfor %}
+				<input type='submit' value='Save Changes'>
+			</form>
+		</ul>
+	</div>
 {% endblock %}

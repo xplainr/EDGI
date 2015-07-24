@@ -1,5 +1,4 @@
 #login {
-<<<<<<< HEAD
     background:#A9BD38 ;
     background:-moz-linear-gradient(top,#A9BD38  0%,#5F7F1F  100%);
     background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#A9BD38 ),color-stop(100%,#5F7F1F ));
@@ -10,7 +9,7 @@
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#A9BD38 ', endColorstr='#5F7F1F ',GradientType=0);
     padding:10px 15px;
     color:#fff;
-    font-family:'Helvetica Neue',sans-serif;
+    font-family:'Helvetica',sans-serif;
     font-size:16px;
     border-radius:5px;
     -moz-border-radius:5px;
@@ -21,34 +20,6 @@
     margin-right: auto;
 }  
 
-#logo {
-    margin-left: auto;
-    margin-right: auto;
-    width: 600px;
-}
-
-=======
-	background:#A9BD38;
-	background:-moz-linear-gradient(top,#A9BD38 0%,#5F7F1F 100%);
-	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#A9BD38),color-stop(100%,#5F7F1F));
-	background:-webkit-linear-gradient(top,#A9BD38 0%,#5F7F1F 100%);
-	background:-o-linear-gradient(top,#A9BD38 0%,#5F7F1F 100%);
-	background:-ms-linear-gradient(top,#A9BD38 0%,#5F7F1F 100%);
-	background:linear-gradient(top,#A9BD38 0%,#5F7F1F 100%);
-	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#A9BD38', endColorstr='#5F7F1F',GradientType=0);
-	padding:10px 15px;
-	color:#fff;
-	font-family:'Helvetica Neue',sans-serif;
-	font-size:16px;
-	border-radius:5px;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border:1px solid #459A00;
-	width: 68px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top:60px;
-}  
 
 #logo {
 	margin-left: auto;
@@ -56,6 +27,7 @@
 	margin-top:100px;
 	width: 600px;
 }
+
 
 #login a:link {
 	color:#fff;
