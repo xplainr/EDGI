@@ -109,4 +109,4 @@ def user_page(request, id=None, survey_title=''):
 	return render(request, 'user.html', 
 		          {'surveys': response_data['data']['surveys'],
 		          'prev_link': prev_link,
-		          'next_link',next_link})
+		          'next_link': next_link})
