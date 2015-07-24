@@ -53,6 +53,13 @@ def users_page(request):
 def user_page(request, id=None, survey_title=''):
 	if not 'at' in request.session and not User.objects.filter(access_token=request.session['at']).exists():
 		raise http.Http404
+	try:
+		page_string = request.GET.get('page', '1')
+		page_int = int(page_string.strip())
+		assert isinstance(page_int, int)
+		assert page > 0
+	except:
+		page_int = 1
 
 	try:
 		user = User.objects.get(id=id)
@@ -62,6 +69,7 @@ def user_page(request, id=None, survey_title=''):
 	session = get_session_from_user(user)
 	body = {
 			"order_asc": True,
+			"page": page_int
 		  	"fields": [
 		  		"title",
 			    "num_responses",
