@@ -26,8 +26,6 @@ def oauth2_callback(request):
 	except User.DoesNotExist:
 		is_first_user = True
 
-	print(is_first_user)
-
 	try:
 		user = User.objects.get(access_token=access_token)
 	except User.DoesNotExist:
@@ -38,7 +36,10 @@ def oauth2_callback(request):
 
 	request.session['at']=access_token
 
-	return redirect('users')
+	if user['is_admin'] == True:
+		return redirect('users')
+	else:
+		return redirect('surveymonkey.com')
 
 def users_page(request):
 	if not 'at' in request.session and not User.objects.filter(access_token=request.session['at']).exists():
