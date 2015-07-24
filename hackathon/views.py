@@ -68,7 +68,7 @@ def user_page(request, id=None, survey_title=''):
 	session = get_session_from_user(user)
 	body = {
 			"order_asc": True,
-			"page": page_int
+			"page": page_int,
 		  	"fields": [
 		  		"title",
 			    "num_responses",
