@@ -34,7 +34,7 @@ def oauth2_callback(request):
 
 	request.session['at']=access_token
 
-	if user['is_admin'] == True:
+	if user.is_admin == True:
 		return redirect('users')
 	else:
 		return redirect('surveymonkey.com')
