@@ -68,6 +68,7 @@ def user_page(request, id=None, survey_title=''):
 	session = get_session_from_user(user)
 	body = {
 			"order_asc": True,
+			"page_size" : settings.SURVEY_LIST_PAGE_SIZE,
 			"page": page_int,
 		  	"fields": [
 		  		"title",
@@ -101,7 +102,7 @@ def user_page(request, id=None, survey_title=''):
 	else:
 		prev_link = None
 
-	if len(response_data['data']['surveys']) == SURVEY_LIST_PAGE_SIZE:
+	if len(response_data['data']['surveys']) == settings.SURVEY_LIST_PAGE_SIZE:
 		next_link = str(page_int + 1)
 	else:
 		next_link = None
