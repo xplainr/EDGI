@@ -105,8 +105,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-SM_API_KEY = 'p6ravs6kmfezfknc7q772udz'
+SM_API_KEY = 'vxntawba2bb7nyhw6zwmbq5r'
 
-SM_SECRET = 'hrkCRtSQVVfhdBvjfZ83by9Ju82ZxRjt'
+SM_SECRET = 'dYJ8dSNe5DjbpnkN6ZBFZStfRuCBvegR'
 
+<<<<<<< HEAD
 SM_CLIENT_ID = 'ocwavean'
+=======
+SM_CLIENT_ID = 'SurveyMonkeySolEng'
+>>>>>>> b835aadf62c7dd18a62cdf5cae817e57f9624eb7

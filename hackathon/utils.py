@@ -21,7 +21,7 @@ def build_api_url(name):
 
 def get_oauth_url():
 	surveymonkey = get_oauth_service()
-	redirect_uri = "http://127.0.0.1:8080/oa2callback"
+	redirect_uri = "http://ec2-54-69-48-63.us-west-2.compute.amazonaws.com:8000/oa2callback"
 	params = {
 		'redirect_uri': redirect_uri,
 		'api_key': settings.SM_API_KEY,
@@ -36,7 +36,7 @@ def get_session_from_response(request):
 		data = {
 			'code': request.GET['code'], 
 			'grant_type': 'authorization_code',
-			'redirect_uri': 'http://127.0.0.1:8080/oa2callback'
+			'redirect_uri': 'http://ec2-54-69-48-63.us-west-2.compute.amazonaws.com:8000/oa2callback'
 		},
 		decoder=json.loads
 	)
