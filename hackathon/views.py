@@ -97,4 +97,17 @@ def user_page(request, id=None, survey_title=''):
 	for idx, response in enumerate(response_data['data']['surveys']):
 		response_data['data']['surveys'][idx]['language_id'] = language_id_key[response_data['data']['surveys'][idx]['language_id']-1]
 
-	return render(request, 'user.html', {'surveys': response_data['data']['surveys']})
+	if page_int > 1:
+		prev_link = str(page_int - 1)
+	else:
+		prev_link = None
+
+	if len(response_data['data']['surveys']) == SURVEY_LIST_PAGE_SIZE:
+		next_link = str(page_int + 1)
+	else:
+		next_link = None
+
+	return render(request, 'user.html', 
+		          {'surveys': response_data['data']['surveys'],
+		          'prev_link': prev_link,
+		          'next_link',next_link})
