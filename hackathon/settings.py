@@ -110,3 +110,7 @@ SM_API_KEY = 'p6ravs6kmfezfknc7q772udz'
 SM_SECRET = 'hrkCRtSQVVfhdBvjfZ83by9Ju82ZxRjt'
 
 SM_CLIENT_ID = 'ocwavean'
+
+# Default values
+
+SURVEY_LIST_PAGE_SIZE = 25

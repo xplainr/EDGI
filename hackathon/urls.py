@@ -21,6 +21,6 @@ urlpatterns = [
 	url(r'^$', login_page),
 	url(r'^oa2callback/$', oauth2_callback),
 	url(r'^users/$', users_page, name="users"),
-	url(r'^user/(?P<id>\d+)/$', user_page),
+	url(r'^user/(?P<id>\d+)/$', user_page, name='user'),
     url(r'^admin/', include(admin.site.urls)),
 ]

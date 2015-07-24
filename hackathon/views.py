@@ -34,7 +34,10 @@ def oauth2_callback(request):
 
 	request.session['at']=access_token
 
-	return redirect('users')
+	if user['is_admin'] == True:
+		return redirect('users')
+	else:
+		return redirect('surveymonkey.com')
 
 def users_page(request):
 	if not 'at' in request.session and not User.objects.filter(access_token=request.session['at']).exists():
@@ -49,6 +52,13 @@ def users_page(request):
 def user_page(request, id=None, survey_title=''):
 	if not 'at' in request.session and not User.objects.filter(access_token=request.session['at']).exists():
 		raise http.Http404
+	try:
+		page_string = request.GET.get('page', '1')
+		page_int = int(page_string.strip())
+		assert isinstance(page_int, int)
+		assert page > 0
+	except:
+		page_int = 1
 
 	try:
 		user = User.objects.get(id=id)
@@ -58,6 +68,7 @@ def user_page(request, id=None, survey_title=''):
 	session = get_session_from_user(user)
 	body = {
 			"order_asc": True,
+			"page": page_int
 		  	"fields": [
 		  		"title",
 			    "num_responses",
@@ -85,4 +96,17 @@ def user_page(request, id=None, survey_title=''):
 	for idx, response in enumerate(response_data['data']['surveys']):
 		response_data['data']['surveys'][idx]['language_id'] = language_id_key[response_data['data']['surveys'][idx]['language_id']-1]
 
-	return render(request, 'user.html', {'surveys': response_data['data']['surveys']})
+	if page_int > 1:
+		prev_link = str(page_int - 1)
+	else:
+		prev_link = None
+
+	if len(response_data['data']['surveys']) == SURVEY_LIST_PAGE_SIZE:
+		next_link = str(page_int + 1)
+	else:
+		next_link = None
+
+	return render(request, 'user.html', 
+		          {'surveys': response_data['data']['surveys'],
+		          'prev_link': prev_link,
+		          'next_link',next_link})
