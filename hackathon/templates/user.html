@@ -46,8 +46,8 @@
 	</table>
 {% endblock %}
 {% if prev_link %}
-	<span id="prev_link"><a href="{% url user %}?page={% prev_link %}">&lt;Prev</a></span>
+	<span id="prev_link"><a href="{{ url user }}?page={{ prev_link }}">&lt;Prev</a></span>
 {% endif %}
 {% if next_link %}
-	<span id="next_link"><a href="{% url user %}?page={% next_link %}">Next;&gt;</a></span>
+	<span id="next_link"><a href="{{ url user }}?page={{ next_link }}">Next;&gt;</a></span>
 {% endif %}
