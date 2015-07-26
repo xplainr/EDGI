@@ -56,7 +56,7 @@ def user_page(request, id=None, survey_title=''):
 		page_string = request.GET.get('page', '1')
 		page_int = int(page_string.strip())
 		assert isinstance(page_int, int)
-		assert page > 0
+		assert page_int > 0
 	except:
 		page_int = 1
 
@@ -110,4 +110,5 @@ def user_page(request, id=None, survey_title=''):
 	return render(request, 'user.html', 
 		          {'surveys': response_data['data']['surveys'],
 		          'prev_link': prev_link,
-		          'next_link': next_link})
+		          'next_link': next_link,
+		          'id': id})

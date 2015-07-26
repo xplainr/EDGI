@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
+<span id="home_link"><a href="/users">Home</a></span>
 	<table>
 		<tr>
 			<th>
@@ -44,10 +45,10 @@
 			</tr>
 		{% endfor %}
 	</table>
+{% ifnotequal prev_link None %}
+	<span id="prev_link"><a href="/user/{{ id }}?page={{ prev_link }}">&lt;Prev</a></span>
+{% endifnotequal %}
+{% ifnotequal next_link None %}
+	<span id="next_link"><a href="/user/{{ id }}?page={{ next_link }}">Next&gt;</a></span>
+{% endifnotequal %}
 {% endblock %}
-{% if prev_link %}
-	<span id="prev_link"><a href="{{ url user }}?page={{ prev_link }}">&lt;Prev</a></span>
-{% endif %}
-{% if next_link %}
-	<span id="next_link"><a href="{{ url user }}?page={{ next_link }}">Next;&gt;</a></span>
-{% endif %}
