@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from django import http
+from django.http import Http404
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import \
+	 ObjectDoesNotExist, PermissionDenied
 
 from .utils import *
 from .models import User
@@ -15,24 +16,51 @@ def oauth2_callback(request):
 	session = get_session_from_response(request)
 	access_token = session.access_token
 
-	response_data = sm_request(session, 'get_user_details', {})
-	username = response_data['data']['user_details']['username']
+	try:
+		response_data = sm_request(session, 'get_user_details', {})
+		assert response_data is not None
+	except:
+		raise IOError('Error retrieving user details from SurveyMonkey.')
+
+	user_details = response_data['data']['user_details']
+	enterprise_details = response_data['data'].get('enterprise_details')
+	username = user_details['username']
+	print user_details
+	if user_details['is_enterprise_user']:
+		group_name = enterprise_details.get('group_name')
+	else:
+		raise PermissionDenied(
+			'Please login with your SurveyMonkey Enterprise account.')
+
+	if settings.LIMIT_TO_ONE_GROUP:
+		groups = User.objects.values('group_name').distinct()
+		if len(groups) > 1 or groups[0]['group_name'] != group_name:
+			raise PermissionDenied(
+				'Only SurveyMonkey accounts in %s group are permitted.' % 
+				groups[0]['group_name'])
 
 	try:
-		if User.objects.get(is_admin=True):
-			is_first_user = False
+		if User.objects.get(is_admin=True, group_name=group_name):
+			is_first_group_user = False
 	except User.DoesNotExist:
-		is_first_user = True
+		is_first_group_user = True
 
 	try:
-		user = User.objects.get(access_token=access_token)
+		user = User.objects.get(access_token=access_token, 
+			                    group_name=group_name)
 	except User.DoesNotExist:
-		if is_first_user:
-			user = User.objects.create(username=username, access_token=access_token, is_admin=True)
+		if is_first_group_user:
+			user = User.objects.create(username=username, 
+									   access_token=access_token, 
+									   is_admin=True, 
+									   group_name=group_name)
 		else:
-			user = User.objects.create(username=username, access_token=access_token)
+			user = User.objects.create(username=username, 
+				                       access_token=access_token, 
+				                       group_name=group_name)
 
 	request.session['at']=access_token
+	request.session['gn']=group_name
 
 	if user.is_admin == True:
 		return redirect('users')
@@ -40,18 +68,39 @@ def oauth2_callback(request):
 		return redirect('surveymonkey.com')
 
 def users_page(request):
-	if not 'at' in request.session and not User.objects.filter(access_token=request.session['at']).exists():
-		raise http.Http404
+	Users = User.objects.all()
+
+	if \
+	'at' not in request.session and \
+	not Users.filter(access_token=request.session['at']).exists() and\
+	'gn' not in request.session and \
+	not Users.filter(group_name=request.session['gn']).exists():
+		raise Http404
+
+	ThisUser = Users.filter(access_token=request.session['at'])
+
+	if not ThisUser.values()[0]['is_admin']:
+		raise PermissionDenied
 
 	if request.method == "POST":
 		checker = request.POST.get("make_admin", None)
 		print(checker)
 
-	return render(request, 'users.html', {'users': User.objects.all()})
+	if 'gn' in request.session:
+		group_name = request.session['gn']
+	else:
+		group_name = ThisUser.values()[0]['group_name']
+
+	group_users = User.objects.filter(group_name=group_name)
+
+	return render(request, 'users.html', {'users': group_users,
+										  'group_name':group_name})
 
 def user_page(request, id=None, survey_title=''):
-	if not 'at' in request.session and not User.objects.filter(access_token=request.session['at']).exists():
-		raise http.Http404
+	if not 'at' in request.session and \
+	   not User.objects.filter(access_token=request.session['at']).exists():
+		raise Http404
+
 	try:
 		page_string = request.GET.get('page', '1')
 		page_int = int(page_string.strip())
@@ -63,7 +112,7 @@ def user_page(request, id=None, survey_title=''):
 	try:
 		user = User.objects.get(id=id)
 	except User.DoesNotExist:
-		raise http.Http404
+		raise Http404
 
 	session = get_session_from_user(user)
 	body = {
@@ -82,8 +131,12 @@ def user_page(request, id=None, survey_title=''):
 			}
 	if survey_title != '':
 		body['title'] = survey_title
-	response_data = sm_request(session,'get_survey_list', body)
-	#check for response_data == None
+
+	try:
+		response_data = sm_request(session,'get_survey_list', body)
+		assert response_data is not None
+	except:
+		raise IOError('Unable to retrieve survey list from SurveyMonkey.')
 
 	language_id_key = [
 		'English', 'Chinese(Simplified)', 'Chinese(Traditional)', 'Danish', 'Dutch', 'Finnish', 'French', 'German', 'Greek', 

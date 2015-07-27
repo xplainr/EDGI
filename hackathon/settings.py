@@ -111,6 +111,10 @@ SM_SECRET = 'hrkCRtSQVVfhdBvjfZ83by9Ju82ZxRjt'
 
 SM_CLIENT_ID = 'ocwavean'
 
-# Default values
+# EDGI Default values
 
 SURVEY_LIST_PAGE_SIZE = 25
+
+# EDGI Settings
+
+LIMIT_TO_ONE_GROUP = False
