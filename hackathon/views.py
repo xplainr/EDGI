@@ -77,14 +77,18 @@ def users_page(request):
 	not Users.filter(group_name=request.session['gn']).exists():
 		raise Http404
 
-	ThisUser = Users.filter(access_token=request.session['at'])
+	ThisUser = Users.filter(access_token=request.session['at']).values()[0]
 
-	if not ThisUser.values()[0]['is_admin']:
+	if not ThisUser['is_admin']:
 		raise PermissionDenied
 
 	if request.method == "POST":
-		checker = request.POST.get("make_admin", None)
-		print(checker)
+		selected_list = request.POST.get('selected', None)
+		add_admin = bool(request.POST.get('add_admin', False))
+		remove_admin = bool(request.POST.get('remove_admin', False))
+		admin_value = add_admin and not remove_admin
+		print bool(admin_value)
+		Users.filter(username=selected_list).update(is_admin=admin_value)
 
 	if 'gn' in request.session:
 		group_name = request.session['gn']
@@ -94,7 +98,8 @@ def users_page(request):
 	group_users = User.objects.filter(group_name=group_name)
 
 	return render(request, 'users.html', {'users': group_users,
-										  'group_name':group_name})
+										  'group_name':group_name,
+										  'ThisUsername': ThisUser['username']})
 
 def user_page(request, id=None, survey_title=''):
 	if not 'at' in request.session and \
