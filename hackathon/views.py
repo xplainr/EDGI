@@ -101,7 +101,7 @@ def users_page(request):
 										  'group_name':group_name,
 										  'ThisUsername': ThisUser['username']})
 
-def user_page(request, id=None, survey_title=''):
+def user_page(request, id=None, survey_title_to_search=''):
 	if not 'at' in request.session and \
 	   not User.objects.filter(access_token=request.session['at']).exists():
 		raise Http404
@@ -120,6 +120,14 @@ def user_page(request, id=None, survey_title=''):
 		raise Http404
 
 	session = get_session_from_user(user)
+
+	if request.method == "POST":
+		survey_title_to_search = request.POST.get('search_value', '')
+	else:
+		survey_title_to_search = request.session['stts']
+
+	request.session['stts'] = survey_title_to_search
+
 	body = {
 			"order_asc": True,
 			"page_size" : settings.SURVEY_LIST_PAGE_SIZE,
@@ -134,12 +142,13 @@ def user_page(request, id=None, survey_title=''):
 			    "preview_url"
 			  ]	
 			}
-	if survey_title != '':
-		body['title'] = survey_title
+	if survey_title_to_search != '':
+		body['title'] = survey_title_to_search
 
 	try:
 		response_data = sm_request(session,'get_survey_list', body)
 		assert response_data is not None
+		response_data = response_data['data']
 	except:
 		raise IOError('Unable to retrieve survey list from SurveyMonkey.')
 
@@ -152,21 +161,23 @@ def user_page(request, id=None, survey_title=''):
 		'Serbian', 'Slovak', 'Slovenian', 'Swahili', 'Tamil', 'Telugu', 'Thai', 'Vietnamese', 'Welsh'
 	]
 
-	for idx, response in enumerate(response_data['data']['surveys']):
-		response_data['data']['surveys'][idx]['language_id'] = language_id_key[response_data['data']['surveys'][idx]['language_id']-1]
+	for idx, response in enumerate(response_data['surveys']):
+		response_data['surveys'][idx]['language_id'] = language_id_key[response_data['surveys'][idx]['language_id']-1]
 
 	if page_int > 1:
 		prev_link = str(page_int - 1)
 	else:
 		prev_link = None
 
-	if len(response_data['data']['surveys']) == settings.SURVEY_LIST_PAGE_SIZE:
+	if len(response_data['surveys']) == settings.SURVEY_LIST_PAGE_SIZE:
 		next_link = str(page_int + 1)
 	else:
 		next_link = None
 
 	return render(request, 'user.html', 
-		          {'surveys': response_data['data']['surveys'],
+		          {'surveys': response_data['surveys'],
 		          'prev_link': prev_link,
 		          'next_link': next_link,
-		          'id': id})
+		          'id': id,
+		          'search_value': survey_title_to_search,
+		          'page_size': settings.SURVEY_LIST_PAGE_SIZE})
