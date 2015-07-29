@@ -65,7 +65,8 @@ def oauth2_callback(request):
 	if user.is_admin == True:
 		return redirect('users')
 	else:
-		return redirect('surveymonkey.com')
+		protocol = 'https://' if is_secure() else 'http://'
+		return redirect('%ssurveymonkey.com' % protocol)
 
 def users_page(request):
 	Users = User.objects.all()
@@ -124,7 +125,7 @@ def user_page(request, id=None, survey_title_to_search=''):
 	if request.method == "POST":
 		survey_title_to_search = request.POST.get('search_value', '')
 	else:
-		survey_title_to_search = request.session['stts']
+		survey_title_to_search = request.session.get('stts','')
 
 	request.session['stts'] = survey_title_to_search
 
