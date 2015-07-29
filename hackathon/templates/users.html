@@ -1,14 +1,23 @@
 {% extends 'base.html' %}
 {% block body %}
+	<H1 id='group_name'>{{group_name}}</H1>
 	<div id="ul">
 		<ul id="users_list">
 			<form action="" method="post">{% csrf_token %}
 				{% for user in users %}	
-					<li> <input type="checkbox" name="make_admin" value={{user.username}}>
+					<li> 
+						{% if ThisUsername != user.username%}
+							<input type="checkbox" name="selected" value={{user.username}}>
+						{% endif %}
 						<a href="/user/{{user.id}}">{{user.username}}</a>
+						{% if user.is_admin %}&nbsp;(Admin){% endif %}
 					</li>
 				{% endfor %}
-				<input type='submit' value='Save Changes'>
+				{% if users.count > 1 %}
+					<button type='submit' name='add_admin' value='add_admin'>
+					Add Admin Privileges</button>
+					<button type='submit' name='remove_admin' value='remove_admin'>Remove Admin Privileges</button>
+				{% endif %}
 			</form>
 		</ul>
 	</div>

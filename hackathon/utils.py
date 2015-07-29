@@ -2,6 +2,7 @@ from rauth import OAuth2Service
 from rauth.session import OAuth2Session
 
 from django.conf import settings
+from django import http
 import json
 
 def get_oauth_service():
@@ -32,14 +33,17 @@ def get_oauth_url():
 
 def get_session_from_response(request):
 	service = get_oauth_service()
-	return service.get_auth_session(
-		data = {
-			'code': request.GET['code'], 
-			'grant_type': 'authorization_code',
-			'redirect_uri': 'http://127.0.0.1:8080/oa2callback'
-		},
-		decoder=json.loads
-	)
+	try:
+		return service.get_auth_session(
+			data = {
+				'code': request.GET['code'], 
+				'grant_type': 'authorization_code',
+				'redirect_uri': 'http://127.0.0.1:8080/oa2callback'
+			},
+			decoder=json.loads
+		)
+	except:
+		raise Exception('Unable to generate access token')
 
 def get_session_from_user(user):
 	service = get_oauth_service()
