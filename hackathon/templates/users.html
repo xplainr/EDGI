@@ -14,9 +14,9 @@
 					</li>
 				{% endfor %}
 				{% if users.count > 1 %}
-					<button type='submit' name='add_admin' value='add_admin'>
+					<button type='submit' formmethod="post" name='add_admin' formaction="." value='add_admin'>
 					Add Admin Privileges</button>
-					<button type='submit' name='remove_admin' value='remove_admin'>Remove Admin Privileges</button>
+					<button type='submit' formmethod="post" name='remove_admin' formaction="." value='remove_admin'>Remove Admin Privileges</button>
 				{% endif %}
 			</form>
 		</ul>
