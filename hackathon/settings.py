@@ -113,7 +113,7 @@ SM_CLIENT_ID = 'ocwavean'
 
 # EDGI Default values
 
-SURVEY_LIST_PAGE_SIZE = 25
+SURVEY_LIST_PAGE_SIZE = 5
 
 # EDGI Settings
 
