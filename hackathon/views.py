@@ -90,7 +90,9 @@ def users_page(request):
 		admin_value = add_admin and not remove_admin
 		print bool(admin_value)
 		Users.filter(username=selected_list).update(is_admin=admin_value)
+		# return render(request, 'users.html')
 
+	print request.method 
 	if 'gn' in request.session:
 		group_name = request.session['gn']
 	else:
