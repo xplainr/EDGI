@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block body %}
 	<span id="home_link"><a href="/users">Home</a></span>
-	<div id="title_search">
+	<div id="title_search" style="width:300px; margin:auto;">
 		<form action="/user/{{ id }}/" method="post">{% csrf_token %}
-			Search for surveys by title/nickname 
+			<strong>Search for surveys by title/nickname</strong>
 			<input type="search" name="search_value" value="{{ search_value }}">
 			<button type="submit" id="search" name="search">
 				Search
@@ -22,15 +22,15 @@
 		{{ surveys|length }} surveys.
 	</div>
 	{% ifnotequal prev_link None %}
-		<span id="prev_link"><a href="/user/{{ id }}?page={{ prev_link }}">&lt;Prev</a></span>
+		<span id="prev_link"><a href="/user/{{ id }}?page={{ prev_link }}">&lt; Prev</a></span>
 	{% endifnotequal %}
 	{% ifnotequal next_link None %}
-		<span id="next_link"><a href="/user/{{ id }}?page={{ next_link }}">Next&gt;</a></span>
+		<span id="next_link"><a href="/user/{{ id }}?page={{ next_link }}">Next &gt;</a></span>
 	{% endifnotequal %}
-	<table>
+	<table id="table" align="center">
 		<tr>
 			<th>
-				Survey Title
+				Survey Nickname
 			</th>
 			<th>
 				Date Created
@@ -39,7 +39,7 @@
 				Last Modified
 			</th>
 			<th>
-				Resposnes
+				Responses
 			</th>
 			<th>
 				Questions
@@ -74,9 +74,9 @@
 		{% endfor %}
 	</table>
 	{% ifnotequal prev_link None %}
-		<span id="prev_link"><a href="/user/{{ id }}?page={{ prev_link }}">&lt;Prev</a></span>
+		<span id="prev_link"><a href="/user/{{ id }}?page={{ prev_link }}">&lt; Prev</a></span>
 	{% endifnotequal %}
 	{% ifnotequal next_link None %}
-		<span id="next_link"><a href="/user/{{ id }}?page={{ next_link }}">Next&gt;</a></span>
+		<span id="next_link"><a href="/user/{{ id }}?page={{ next_link }}">Next &gt;</a></span>
 	{% endifnotequal %}
 {% endblock %}

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+<link rel="stylesheet" href="style.css">
 {% block body %}
 	<H1 id='group_name'>{{group_name}}</H1>
 	<div id="ul">
@@ -9,8 +10,8 @@
 						{% if ThisUsername != user.username%}
 							<input type="checkbox" name="selected" value={{user.username}}>
 						{% endif %}
+						{% if user.is_admin %}<img src="http://pngimg.com/upload/star_PNG1594.png" style="width:17px;height:17px;">{% endif %}
 						<a href="/user/{{user.id}}">{{user.username}}</a>
-						{% if user.is_admin %}&nbsp;(Admin){% endif %}
 					</li>
 				{% endfor %}
 				{% if users.count > 1 %}
