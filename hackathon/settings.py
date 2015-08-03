@@ -109,8 +109,6 @@ SM_API_KEY = 'vxntawba2bb7nyhw6zwmbq5r'
 
 SM_SECRET = 'dYJ8dSNe5DjbpnkN6ZBFZStfRuCBvegR'
 
-HEAD
-
 # EDGI Default values
 
 SURVEY_LIST_PAGE_SIZE = 5
