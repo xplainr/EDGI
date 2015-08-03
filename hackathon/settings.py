@@ -78,7 +78,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hackathon',
-        'PASSWORD': '',
+        'PASSWORD': 'bananas123',
         'USER': 'root',
         'HOST': 'localhost'
 
@@ -105,11 +105,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-SM_API_KEY = 'p6ravs6kmfezfknc7q772udz'
+SM_API_KEY = 'vxntawba2bb7nyhw6zwmbq5r'
 
-SM_SECRET = 'hrkCRtSQVVfhdBvjfZ83by9Ju82ZxRjt'
+SM_SECRET = 'dYJ8dSNe5DjbpnkN6ZBFZStfRuCBvegR'
 
-SM_CLIENT_ID = 'ocwavean'
+HEAD
 
 # EDGI Default values
 
@@ -118,3 +118,5 @@ SURVEY_LIST_PAGE_SIZE = 5
 # EDGI Settings
 
 LIMIT_TO_ONE_GROUP = False
+
+SM_CLIENT_ID = 'SurveyMonkeySolEng'
