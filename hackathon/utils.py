@@ -33,7 +33,7 @@ def get_oauth_url():
 
 def get_session_from_response(request):
 	service = get_oauth_service()
-<<<<<<< HEAD
+
 	try:
 		return service.get_auth_session(
 			data = {
