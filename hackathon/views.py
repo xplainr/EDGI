@@ -92,7 +92,8 @@ def users_page(request):
 		Users.filter(username=selected_list).update(is_admin=admin_value)
 		# return render(request, 'users.html')
 
-	print request.method 
+	request.session['stts'] = '' #clear search parameter from user_page
+	
 	if 'gn' in request.session:
 		group_name = request.session['gn']
 	else:
