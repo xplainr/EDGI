@@ -40,7 +40,7 @@ def oauth2_callback(request):
 				groups[0]['group_name'])
 
 	try:
-		if User.objects.get(is_admin=True, group_name=group_name):
+		if User.objects.filter(is_admin=True, group_name=group_name).exists():
 			is_first_group_user = False
 	except User.DoesNotExist:
 		is_first_group_user = True
