@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import Http404, is_secure
+from django.http import Http404, HttpRequest
 from django.conf import settings
 from django.core.exceptions import \
 	 ObjectDoesNotExist, PermissionDenied
@@ -65,7 +65,7 @@ def oauth2_callback(request):
 	if user.is_admin == True:
 		return redirect('users')
 	else:
-		protocol = 'https://' if is_secure() else 'http://'
+		protocol = 'https://' if request.is_secure() else 'http://'
 		return redirect('%ssurveymonkey.com' % protocol)
 
 def users_page(request):
