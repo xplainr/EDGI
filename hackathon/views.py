@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import Http404
+from django.http import Http404, is_secure
 from django.conf import settings
 from django.core.exceptions import \
 	 ObjectDoesNotExist, PermissionDenied
