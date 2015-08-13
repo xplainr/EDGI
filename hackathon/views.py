@@ -64,8 +64,7 @@ def oauth2_callback(request):
 	if user.is_admin == True:
 		return redirect('users')
 	else:
-		protocol = 'https://' if request.is_secure() else 'http://'
-		return redirect('%ssurveymonkey.com' % protocol)
+		return redirect('thankyou.html')
 
 def users_page(request):
 	Users = User.objects.all()
