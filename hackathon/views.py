@@ -87,12 +87,13 @@ def users_page(request):
 		selected_list = request.POST.get('selected', None)
 		add_admin = bool(request.POST.get('add_admin', False))
 		remove_admin = bool(request.POST.get('remove_admin', False))
+		remove_user = bool(request.POST.get('remove_user', False))
 		admin_value = add_admin and not remove_admin
-		print bool(admin_value)
-		Users.filter(username=selected_list).update(is_admin=admin_value)
-		# return render(request, 'users.html')
+		if not remove_user:
+			Users.filter(username=selected_list).update(is_admin=admin_value)
+		else:
+			Users.objects.filter(username=selected_list).delete()
 
-	print request.method 
 	if 'gn' in request.session:
 		group_name = request.session['gn']
 	else:
@@ -101,8 +102,8 @@ def users_page(request):
 	group_users = User.objects.filter(group_name=group_name)
 
 	return render(request, 'users.html', {'users': group_users,
-										  'group_name':group_name,
-										  'ThisUsername': ThisUser['username']})
+					      'group_name':group_name,
+					      'ThisUsername': ThisUser['username']})
 
 def user_page(request, id=None, survey_title_to_search=''):
 	if not 'at' in request.session and \
