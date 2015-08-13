@@ -5,3 +5,6 @@ class User(models.Model):
 	access_token = models.TextField()
 	is_admin = models.BooleanField(default=False)
 	group_name = models.CharField(max_length=255,default="No Group")
+	
+	class Meta:
+        ordering = ['-is_admin','username']
