@@ -39,10 +39,9 @@ def oauth2_callback(request):
 				'Only SurveyMonkey accounts in %s group are permitted.' % 
 				groups[0]['group_name'])
 
-	try:
-		if User.objects.filter(is_admin=True, group_name=group_name).exists():
-			is_first_group_user = False
-	except User.DoesNotExist:
+	if User.objects.filter(is_admin=True, group_name=group_name).exists():
+		is_first_group_user = False
+	else:
 		is_first_group_user = True
 
 	try:
