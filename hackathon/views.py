@@ -94,6 +94,7 @@ def users_page(request):
 		else:
 			Users.objects.filter(username=selected_list).delete()
 
+	print request.method 
 	if 'gn' in request.session:
 		group_name = request.session['gn']
 	else:
