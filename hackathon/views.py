@@ -183,4 +183,5 @@ def user_page(request, id=None, survey_title_to_search=''):
 		          'next_link': next_link,
 		          'id': id,
 		          'search_value': survey_title_to_search,
-		          'page_size': settings.SURVEY_LIST_PAGE_SIZE})
+		          'page_size': settings.SURVEY_LIST_PAGE_SIZE,
+		          'ThisUsername': user['username']})
