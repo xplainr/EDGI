@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from .views import login_page, oauth2_callback, users_page, user_page
+from .views import login_page, oauth2_callback, users_page, user_page, thankyou_page
 
 urlpatterns = [
 	url(r'^$', login_page),
 	url(r'^oa2callback/$', oauth2_callback),
 	url(r'^users/$', users_page, name="users"),
 	url(r'^user/(?P<id>\d+)/$', user_page, name='user'),
+	url(r'^thankyou/$', thankyou_page, name='thankyou'),
     url(r'^admin/', include(admin.site.urls)),
 ]

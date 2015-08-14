@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
 	<span id="home_link"><a href="/users">Home</a></span>
-	<h1>{{ThisUsername}}</h1>
+	<h1 style="text-align: center">{{ ThisUserName }}</h1>
 	<div id="title_search" style="width:300px; margin:auto;">
 		<form action="/user/{{ id }}/" method="post">{% csrf_token %}
 			<strong>Search for surveys by title/nickname</strong>
