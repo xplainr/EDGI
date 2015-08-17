@@ -86,15 +86,18 @@ def users_page(request):
 		raise PermissionDenied
 
 	if request.method == "POST":
-		selected_list = request.POST.get('selected', None)
+		selected_list = request.POST.getlist('selected')
+		print 'Selected: ' +  str(selected_list)
 		add_admin = bool(request.POST.get('add_admin', False))
 		remove_admin = bool(request.POST.get('remove_admin', False))
 		remove_user = bool(request.POST.get('remove_user', False))
 		admin_value = add_admin and not remove_admin
 		if not remove_user:
-			Users.filter(username=selected_list).update(is_admin=admin_value)
+			record_count = Users.filter(username__in=selected_list).update(is_admin=admin_value)
+			print record_count
 		else:
-			Users.filter(username=selected_list).delete()
+			record_count = Users.filter(username__in=selected_list).delete()
+			print record_count
 
 	request.session['stts'] = '' #clear search parameter from user_page
 	
