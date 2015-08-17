@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block body %}
 	<span id="home_link"><a href="/users">Home</a></span>
-	<h1 style="text-align: center">{{ ThisUserName }}</h1>
+	<h1 id="group_name">{{group_name}}: {{ ThisUserName }}</h1>
+	<div style="text-align:center">
 	<div id="title_search" style="width:300px; margin:auto;">
 		<form action="/user/{{ id }}/" method="post">{% csrf_token %}
 			<strong>Search for surveys by title/nickname</strong>
@@ -22,12 +23,14 @@
 		{% endif %}
 		{{ surveys|length }} surveys.
 	</div>
+	<div style="display: inline-block">
 	{% ifnotequal prev_link None %}
-		<span id="prev_link"><a href="/user/{{ id }}?page={{ prev_link }}">&lt; Prev</a></span>
+		<div id="prev_link" style="float: left"><a href="/user/{{ id }}?page={{ prev_link }}">&lt; Prev</a></div>
 	{% endifnotequal %}
 	{% ifnotequal next_link None %}
-		<span id="next_link"><a href="/user/{{ id }}?page={{ next_link }}">Next &gt;</a></span>
+		<div id="next_link" style="float: right"><a href="/user/{{ id }}?page={{ next_link }}">Next &gt;</a></div>
 	{% endifnotequal %}
+	<br>
 	<table id="table" align="center">
 		<tr>
 			<th>
@@ -75,9 +78,11 @@
 		{% endfor %}
 	</table>
 	{% ifnotequal prev_link None %}
-		<span id="prev_link"><a href="/user/{{ id }}?page={{ prev_link }}">&lt; Prev</a></span>
+		<div id="prev_link" style="float: left"><a href="/user/{{ id }}?page={{ prev_link }}">&lt; Prev</a></div>
 	{% endifnotequal %}
 	{% ifnotequal next_link None %}
-		<span id="next_link"><a href="/user/{{ id }}?page={{ next_link }}">Next &gt;</a></span>
+		<div id="next_link" style="float: right"><a href="/user/{{ id }}?page={{ next_link }}">Next &gt;</a></div>
 	{% endifnotequal %}
+	</div>
+	</div>
 {% endblock %}

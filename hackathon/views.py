@@ -130,6 +130,7 @@ def user_page(request, id=None, survey_title_to_search=''):
 
 	session = get_session_from_user(user)
 	ThisUserName = user.username
+	gn = user.group_name
 
 	if request.method == "POST":
 		survey_title_to_search = request.POST.get('search_value', '')
@@ -191,4 +192,5 @@ def user_page(request, id=None, survey_title_to_search=''):
 		          'id': id,
 		          'search_value': survey_title_to_search,
 		          'page_size': settings.SURVEY_LIST_PAGE_SIZE,
-		          'ThisUserName': ThisUserName})
+		          'ThisUserName': ThisUserName,
+			  'group_name':gn})
