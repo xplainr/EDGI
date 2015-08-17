@@ -12,6 +12,9 @@ def login_page(request):
 	oauth_url = get_oauth_url()
 	return render(request, 'login.html', {'oauth_url': oauth_url})
 
+def thankyou_page(request):
+	return render(request, 'thankyou.html')
+
 def oauth2_callback(request):
 	session = get_session_from_response(request)
 	access_token = session.access_token
@@ -60,11 +63,12 @@ def oauth2_callback(request):
 
 	request.session['at']=access_token
 	request.session['gn']=group_name
+	request.session['un']=username
 
 	if user.is_admin == True:
 		return redirect('users')
 	else:
-		return redirect('thankyou.html')
+		return redirect('thankyou')
 
 def users_page(request):
 	Users = User.objects.all()
@@ -90,20 +94,21 @@ def users_page(request):
 		if not remove_user:
 			Users.filter(username=selected_list).update(is_admin=admin_value)
 		else:
-			Users.objects.filter(username=selected_list).delete()
+			Users.filter(username=selected_list).delete()
 
 	request.session['stts'] = '' #clear search parameter from user_page
 	
 	if 'gn' in request.session:
 		group_name = request.session['gn']
 	else:
-		group_name = ThisUser.values()[0]['group_name']
+		group_name = ThisUser['group_name']
 
 	group_users = User.objects.filter(group_name=group_name)
-
+	print ThisUser['username']
+	print ThisUser
 	return render(request, 'users.html', {'users': group_users,
 					      'group_name':group_name,
-					      'ThisUsername': ThisUser['username']})
+					      'ThisUserName':ThisUser['username']})
 
 def user_page(request, id=None, survey_title_to_search=''):
 	if not 'at' in request.session and \
@@ -124,6 +129,8 @@ def user_page(request, id=None, survey_title_to_search=''):
 		raise Http404
 
 	session = get_session_from_user(user)
+	ThisUserName = user.username
+	gn = user.group_name
 
 	if request.method == "POST":
 		survey_title_to_search = request.POST.get('search_value', '')
@@ -185,4 +192,5 @@ def user_page(request, id=None, survey_title_to_search=''):
 		          'id': id,
 		          'search_value': survey_title_to_search,
 		          'page_size': settings.SURVEY_LIST_PAGE_SIZE,
-		          'ThisUsername': user['username']})
+		          'ThisUserName': ThisUserName,
+			  'group_name':gn})

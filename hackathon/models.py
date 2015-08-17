@@ -7,4 +7,4 @@ class User(models.Model):
 	group_name = models.CharField(max_length=255,default="No Group")
 	
 	class Meta:
-        ordering = ['-is_admin','username']
+        	ordering = ['-is_admin','username']

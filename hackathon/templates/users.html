@@ -7,7 +7,7 @@
 			<form action="/user/{{user.id}}" method="post">{% csrf_token %}
 				{% for user in users %}	
 					<li> 
-						{% if ThisUsername != user.username%}
+						{% if ThisUserName != user.username%}
 							<input type="checkbox" name="selected" value={{user.username}}>
 						{% endif %}
 						{% if user.is_admin %}<img src="http://pngimg.com/upload/star_PNG1594.png" style="width:17px;height:17px;">{% endif %}
